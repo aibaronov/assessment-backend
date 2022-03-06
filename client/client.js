@@ -4,20 +4,33 @@ const goofyGoober = document.getElementById("goofyGoober");
 const gooberContainer = document.getElementById('goober-info')
 const gooberForm = document.getElementById("gooberForm");
 const updateGooberForm = document.getElementById("update-gooberForm");
+const deleteGooberForm = document.getElementById("remove-gooberForm");
 
 const register = body => axios.post("http://localhost:4000/api/goober/", body).
 then(res => {
     console.log(res.data);
     createGooberCard(res.data);
+    alert(`${res.data.firstName} has been registered.`)
 }).catch(err => {
-    console.log("Registration did not work");
+    alert('Invalid email address')
+    console.log('Invalid email');
 })
 
-const update = (id, body) => axios.put(`http://localhost:4000/api/goober/${id}`).then(res => {
+const update = (id, body) => axios.put(`http://localhost:4000/api/goober/${id}`, body).then(res => {
     console.log(res.data);
+    alert(`Goober with ID: ${res.data.id} has updated their information.`)
+    createGooberCard(res.data);
 }).catch(err => {
     console.log(err);
 })
+
+const deleteGoober = (id) => axios.delete(`http://localhost:4000/api/goober/${id}`).then(res =>{
+    console.log(res.data);
+    alert(`Goober with ID: ${res.data} has been removed from database`);
+}).catch(err => {
+    console.log(err);
+})
+
 
 
 function registerSubmitHandler(e) {
@@ -27,6 +40,7 @@ function registerSubmitHandler(e) {
     let firstName = document.querySelector('#first-name')
     let lastName = document.querySelector('#last-name')
     let email = document.querySelector('#email')
+    let id = document.querySelector('#goober-id');
 
   
     let bodyObj = {
@@ -34,6 +48,7 @@ function registerSubmitHandler(e) {
         firstName: firstName.value,
         lastName: lastName.value,
         email: email.value,
+        id: id.value
     }
     register(bodyObj);
     firstName.value = '';
@@ -41,13 +56,14 @@ function registerSubmitHandler(e) {
     email.value = '';
 }
 
-function updateGoober(e){
+function updateSubmitHandler(e){
     e.preventDefault()
 
-    let firstName = document.querySelector('#first-name')
-    let lastName = document.querySelector('#last-name')
-    let email = document.querySelector('#email')
-    let id = document.querySelector('#goober-id')
+    let firstName = document.querySelector('#first-name-update')
+    let lastName = document.querySelector('#last-name-update')
+    let email = document.querySelector('#email-update')
+    let id = document.querySelector('#goober-id');
+
 
     let bodyObj = {
 
@@ -56,24 +72,38 @@ function updateGoober(e){
         email: email.value,
         id: id.value
     }
-    update(id, bodyObj);
+    console.log(`ID: ${id.value}`);
+    update(id.value, bodyObj);
     firstName.value = '';
     lastName.value = '';
     email.value = '';
     id.value = '';
 }
 
+function deleteSubmitHandler(e){
+    e.preventDefault();
+    gooberContainer.innerHTML = '';
+    let id = document.querySelector("#goober-id-remove");
+    console.log(id.value);
+    deleteGoober(id.value);
+
+    id.value = '';
+}
+
 function createGooberCard(data) {
         gooberContainer.innerHTML = ''
-        const gooberCard = document.createElement('div')
+        const gooberCard = document.createElement('div');
+        gooberCard.classList.add('.goober-info-display');
     
         gooberCard.innerHTML = `
-        <p class="first-name">First Name: ${data.firstName}</p>
-        <p class="last-name">Last Name: ${data.lastName}</p>
-        <p class="email">Email: ${data.email}</p>
+        <div class="goober-info-display">
+            <h4> Account Information </h4>
+            <p class="first-name">First Name: ${data.firstName}</p>
+            <p class="last-name">Last Name: ${data.lastName}</p>
+            <p class="goober-id">ID: ${data.id}</p>
+            <p class="email">Email: ${data.email}</p>
+        </div>
         `
-    
-    
         gooberContainer.appendChild(gooberCard)
     }
     
@@ -97,5 +127,5 @@ document.getElementById("complimentButton").onclick = function () {
     };
 
 gooberForm.addEventListener('submit', registerSubmitHandler);
-updateGooberForm.addEventListener('submit', )
-  
+updateGooberForm.addEventListener('submit', updateSubmitHandler);
+deleteGooberForm.addEventListener('submit', deleteSubmitHandler);

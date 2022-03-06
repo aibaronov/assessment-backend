@@ -2,36 +2,55 @@
 <html>
   <head>
     <title>Back End Assessment</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body class="container">
     <button id="complimentButton">Get a compliment</button>
     <button id="fortuneButton">Get your fortune</button>
     <div id="goofyGoober">
       <h3>Would you like to join the Goofy Goober club?</h3>
-  
-      <form id="gooberForm">
+      <div class="container">
+      <form id="gooberForm" class="forms">
         <h4 id="register-goober">Register Goober</h4>
+
         <label for="first-name"> First Name: </label>
         <input type="text" id="first-name" name="first-name"> <br>
+
         <label for="last-name"> Last Name: </label>
         <input type="text" id="last-name" name="last-name"><br>
+
         <label for="email"> email: </label>
         <input type="text" id="email" name="email"><br>
-        <input type="submit" value="Submit">`
+
+        <input type="submit" value="Submit" class="submit">
       </form>
 
-      <form id="update-gooberForm">
+      <form id="update-gooberForm" class="forms">
         <h4 id="update-goober">Update Goober</h4>
+
         <label for="first-name"> First Name: </label>
-        <input type="text" id="first-name" name="first-name"> <br>
+        <input type="text" id="first-name-update" name="first-name"> <br>
+
         <label for="last-name"> Last Name: </label>
-        <input type="text" id="last-name" name="last-name"><br>
+        <input type="text" id="last-name-update" name="last-name"><br>
+
         <label for="email"> email: </label>
-        <input type="text" id="goober-id" name="goober-id"><br>
+        <input type="text" id="email-update" name="email"><br>
+
         <label for="goober-id"> Goober ID: </label>
-        <input type="text" id="email" name="email"><br>
-        <input type="submit" value="Submit">`
+        <input type="text" id="goober-id" name="goober-id"><br>
+
+        <input type="submit" value="Submit" class="submit">
       </form>
+
+      <form id="remove-gooberForm" class="forms">
+        <h4 id="remove-goober">Delete Goober</h4>
+
+        <label for="goober-id-remove"> Goober ID: </label>
+        <input type="text" id="goober-id-remove" name="goober-id-remove"><br>
+        <input type="submit" value="Submit" class="submit">
+      </form>
+      </div>
         
       <section id="goober-info"></section>
     </div>

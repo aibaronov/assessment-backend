@@ -3,7 +3,7 @@ const cors = require("cors");
 
 const app = express();
 
-const {register, update} = require('./controller');
+const {register, update, deleteGoober} = require('./controller');
 app.use(cors());
 
 app.use(express.json()); // When we want to be able to accept JSON.
@@ -36,5 +36,6 @@ app.get("/api/fortune", (req, res) =>{
 
 app.post("/api/goober", register);
 app.put("/api/goober/:id", update);
+app.delete("/api/goober/:id", deleteGoober);
 
 app.listen(4000, () => console.log("Server running on 4000"));
